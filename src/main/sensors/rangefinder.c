@@ -43,6 +43,7 @@
 #include "drivers/rangefinder/rangefinder_us42.h"
 #include "drivers/rangefinder/rangefinder_teraranger_evo.h"
 #include "drivers/rangefinder/rangefinder_tof10120_i2c.h"
+#include "drivers/rangefinder/rangefinder_tofminic.h"
 
 #include "fc/config.h"
 #include "fc/runtime_config.h"
@@ -166,6 +167,16 @@ static bool rangefinderDetect(rangefinderDev_t * dev, uint8_t rangefinderHardwar
             }
 #endif
             break;
+
+        case RANGEFINDER_TOFMINI:
+#ifdef USE_RANGEFINDER_TOFMINI
+            if (tofminiDetect(dev)) {
+                rangefinderHardware = RANGEFINDER_TOFMINI;
+                rescheduleTask(TASK_RANGEFINDER, TASK_PERIOD_MS(RANGEFINDER_TOFMINI_TASK_PERIOD_MS));
+            }
+#endif
+            break;
+        
             case RANGEFINDER_FAKE:
 #if defined(USE_RANGEFINDER_FAKE)
             if(virtualRangefinderDetect(dev, &rangefinderFakeVtable)) {
