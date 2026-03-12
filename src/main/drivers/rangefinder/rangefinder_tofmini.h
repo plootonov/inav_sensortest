@@ -5,10 +5,6 @@
 #pragma once
 
 #include <stdbool.h>
-#include <stdint.h>
+#include "drivers/rangefinder/rangefinder.h"
 
-bool tofminiRangefinderDetect(void);
-void tofminiRangefinderInit(void);
-bool tofminiRangefinderUpdate(void);
-int32_t tofminiRangefinderGetDistanceCm(void);
-bool tofminiRangefinderIsHealthy(void);
+bool tofminiDetect(rangefinderDev_t *dev);
